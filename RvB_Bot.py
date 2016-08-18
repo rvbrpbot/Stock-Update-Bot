@@ -79,15 +79,15 @@ def testPercent():
 
    
 if __name__=="__main__":
-    """
+    
     try:
         sidebar_contents = r.get_wiki_page(subreddit, 'config/sidebar')
         new_contents = build_response()
         text = sidebar_contents.content_md
         text = sidebar_regex.sub(new_contents, text) 
         print new_contents;
-        #sidebar_contents.edit(text)
+        sidebar_contents.edit(text)
     except praw.errors.HTTPException:
         print "Http error, retrying..."
-        """
-    testPercent()
+        
+    #testPercent()

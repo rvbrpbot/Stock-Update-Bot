@@ -1,5 +1,6 @@
-# Stock-Update-Bot
+#RvB RP Bot
 
-This bot grabs stock info from yahoo-finance and then post that info into the sidebar of the given subreddit
-
-requires: praw, yahoo-finance
+This Bot randomly generates a weather condition and sticks in the sidebar
+Before running it for the first time insert this in your sidebar: "|Weather Here|"
+This bot requires mod permissions to edit config and wiki.
+requires: praw
