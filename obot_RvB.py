@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar  14
+Created on Thurs Aug 18
 
 @author: DapperDodger
 """
 
-app_id = 'ik3AllijFPdIQw'
-app_secret = 'atAB7zxgLYUTQ7Xf1K4zOqqlnCI'
+app_id = 'OUTYzb31qtssQg'
+app_secret = 'szYYwtjBhfcKrsiayt_jZ8fnKFE'
 app_uri = 'https://127.0.0.1:65010/authorize_callback'
-app_ua = 'This is a sidebar updater for use by /r/htcinvestors'
+app_ua = 'This is a sidebar updater for use by /r/RvBRP'
 app_scopes = 'account creddits edit flair history identity livemanage modconfig modcontributors modflair modlog modothers modposts modself modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread'
-app_account_code = 'u_vMFjUfuIVrOpzsdZ49SY8136o'
-app_refresh = '54399749-81mrTDWYlnFmz6PDVwGKv57ZE2o'
+app_account_code = 'Ahs-WZPELfjxP-4FF--TwgpQQrg'
+app_refresh = '61586607-b-Bco0J2CcLK2H00b9HfG7IB6Rg'
 
 import praw
 def login():
