@@ -8,8 +8,9 @@ import praw
 import obot_RvB as obot
 import re
 import random
-subreddit = "DapperDodger"
-sidebar_regex = re.compile("\|(.|\s)*\|", re.MULTILINE)
+import sys
+subreddit = "rvbrp"
+sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
 r = obot.login()
 
 """50% chance of Clear Day, 
@@ -58,7 +59,7 @@ def getWeather():
 def build_response():
     weather = getWeather();
     
-    response = "| Today's Weather is: " + weather + " |"
+    response = "| " + weather + " |"
         
     return response
 def testPercent():
@@ -85,9 +86,12 @@ if __name__=="__main__":
         new_contents = build_response()
         text = sidebar_contents.content_md
         text = sidebar_regex.sub(new_contents, text) 
-        print new_contents;
+        print "The current weather in Blood Gulch is: " + new_contents
         sidebar_contents.edit(text)
     except praw.errors.HTTPException:
         print "Http error, retrying..."
+    except:
+        e = sys.exc_info()[0]
+        print  "Error: " + e;
         
     #testPercent()
