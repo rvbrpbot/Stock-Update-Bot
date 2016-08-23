@@ -8,11 +8,10 @@ import praw
 import obot_RvB as obot
 import re
 import random
-import sys
 import time
 subreddit = "dapperdodger"
 weather_sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
-time_sidebar_regex = re.compile("\<(.|\s)*?\>", re.MULTILINE)
+time_sidebar_regex = re.compile("(January|February|March|April|May|June|July|August|September|October|November|December)\s[0-9]{1,2}(st|nd|rd|th)\,\s[0-9]{4}\s[0-9]{1,2}\:[0-9]{2}\s(PM|AM)", re.MULTILINE)
 r = obot.login()
 
 """50% chance of Clear Day, 
@@ -104,7 +103,7 @@ def build_time():
     timestring += " " + str(day) + suffix;
     timestring += ", " + str(int(localtime[0] + 550));
     timestring += get_time(localtime);
-    return "< " + timestring +" >"
+    return  timestring
 def testPercent():
     weathers= {
          "Sunny": 0,
