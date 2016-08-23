@@ -9,8 +9,10 @@ import obot_RvB as obot
 import re
 import random
 import sys
-subreddit = "rvbrp"
-sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
+import time
+subreddit = "dapperdodger"
+weather_sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
+time_sidebar_regex = re.compile("\<(.|\s)*?\>", re.MULTILINE)
 r = obot.login()
 
 """50% chance of Clear Day, 
@@ -62,6 +64,47 @@ def build_response():
     response = "| " + weather + " |"
         
     return response
+def get_time(time):
+    minute = time[4]
+    minutestring = ""
+    if(minute <10):
+        minutestring = "0" + str(minute)
+    else:
+        minutestring = str(minute)
+    if(time[3] == 0):
+        return " 12:" + minutestring + " AM"
+    elif(time[3] == 12):
+        return " 12:" + minutestring + " PM"
+    elif(time[3] < 12):
+        return " " + str(time[3]) +":" + minutestring + " AM"
+    else:
+        return " " + str(time[3]%12) +":" + minutestring + " PM"
+        
+def build_time():
+    localtime = time.localtime(time.time())
+    months = ["January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December"]
+    suffix = ""
+    day = localtime[2]
+    if 4 <= day <= 20 or 24 <= day <= 30:
+        suffix = "th"
+    else:
+        suffix = ["st", "nd", "rd"][day % 10 - 1]
+    timestring = months[localtime[1]];
+    timestring += " " + str(day) + suffix;
+    timestring += ", " + str(int(localtime[0] + 550));
+    timestring += get_time(localtime);
+    return "< " + timestring +" >"
 def testPercent():
     weathers= {
          "Sunny": 0,
@@ -80,18 +123,25 @@ def testPercent():
 
    
 if __name__=="__main__":
-    
-    try:
-        sidebar_contents = r.get_wiki_page(subreddit, 'config/sidebar')
-        new_contents = build_response()
-        text = sidebar_contents.content_md
-        text = sidebar_regex.sub(new_contents, text) 
-        print "The current weather in Blood Gulch is: " + new_contents
-        sidebar_contents.edit(text)
-    except praw.errors.HTTPException:
-        print "Http error, retrying..."
-    except:
-        e = sys.exc_info()[0]
-        print  "Error: " + e;
+    while True:
+        try:
+            sidebar_contents = r.get_wiki_page(subreddit, 'config/sidebar')
+            
+            new_time = build_time()
+            text = sidebar_contents.content_md
+            text = time_sidebar_regex.sub(new_time, text)
+            print "The current time in Blood Gulch is: " + new_time
+            if time.localtime(time.time())[3]==0 and time.localtime(time.time())[4] ==0:
+                new_weather = build_response()
+                text = weather_sidebar_regex.sub(new_weather, text) 
+                print "The current weather in Blood Gulch is: " + new_weather
+            
+            sidebar_contents.edit(text)
+        except praw.errors.HTTPException:
+            print "Http error, retrying..."
+        except Exception, e:
+            print str(e)
+        time.sleep(60);
+        
         
     #testPercent()
