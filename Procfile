@@ -1,1 +1,1 @@
-web: python RvB_Bot.py
+worker: python RvB_Bot.py
