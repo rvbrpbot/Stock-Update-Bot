@@ -9,7 +9,7 @@ import obot_RvB as obot
 import re
 import random
 import time
-subreddit = "dapperdodger"
+subreddit = "rvbrp"
 weather_sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
 time_sidebar_regex = re.compile("(January|February|March|April|May|June|July|August|September|October|November|December)\s[0-9]{1,2}(st|nd|rd|th)\,\s[0-9]{4}\s[0-9]{1,2}\:[0-9]{2}(\s(PM|AM)){0,1}", re.MULTILINE)
 r = obot.login()
