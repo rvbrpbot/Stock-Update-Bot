@@ -9,9 +9,9 @@ import obot_RvB as obot
 import re
 import random
 import time
-subreddit = "rvbrp"
+subreddit = "dapperdodger"
 weather_sidebar_regex = re.compile("\|(.|\s)*?\|", re.MULTILINE)
-time_sidebar_regex = re.compile("(January|February|March|April|May|June|July|August|September|October|November|December)\s[0-9]{1,2}(st|nd|rd|th)\,\s[0-9]{4}\s[0-9]{1,2}\:[0-9]{2}\s(PM|AM)", re.MULTILINE)
+time_sidebar_regex = re.compile("(January|February|March|April|May|June|July|August|September|October|November|December)\s[0-9]{1,2}(st|nd|rd|th)\,\s[0-9]{4}\s[0-9]{1,2}\:[0-9]{2}(\s(PM|AM)){0,1}", re.MULTILINE)
 r = obot.login()
 
 """50% chance of Clear Day, 
@@ -45,7 +45,7 @@ def weightedChoice(choices):
     
 def getWeather(): 
     choices = [
-    ("Sunny", 500),
+    ("Clear", 500),
     ("Light Rain", 200),
     ("Thunderstorm", 100),
     ("Sandstorm", 100) ,
@@ -65,19 +65,17 @@ def build_response():
     return response
 def get_time(time):
     minute = time[4]
+    hour = time[3]
     minutestring = ""
     if(minute <10):
         minutestring = "0" + str(minute)
     else:
         minutestring = str(minute)
-    if(time[3] == 0):
-        return " 12:" + minutestring + " AM"
-    elif(time[3] == 12):
-        return " 12:" + minutestring + " PM"
-    elif(time[3] < 12):
-        return " " + str(time[3]) +":" + minutestring + " AM"
+    if(hour <10):
+        return " 0" + str(time[3]) +":" + minutestring
     else:
-        return " " + str(time[3]%12) +":" + minutestring + " PM"
+        return " " + str(time[3]) +":" + minutestring
+    
         
 def build_time():
     localtime = time.localtime(time.time())
@@ -99,7 +97,7 @@ def build_time():
         suffix = "th"
     else:
         suffix = ["st", "nd", "rd"][day % 10 - 1]
-    timestring = months[localtime[1]];
+    timestring = months[localtime[1]-1];
     timestring += " " + str(day) + suffix;
     timestring += ", " + str(int(localtime[0] + 550));
     timestring += get_time(localtime);
